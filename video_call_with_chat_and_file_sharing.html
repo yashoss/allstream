@@ -41,7 +41,7 @@ var connect_stream_to_src = null;
 var stun_server = "stun.l.google.com:19302";
 
 if (navigator.getUserMedia) { // WebRTC 1.0 standard compliant browser
-  rtc_peer_connection = RTCPeerConnection;
+  rtc_peer_connection = RTCPeerConnection();
   rtc_session_description = RTCSessionDescription;
   rtc_ice_candidate = RTCIceCandidate;
   get_user_media = navigator.getUserMedia.bind(navigator);
@@ -66,7 +66,7 @@ if (navigator.getUserMedia) { // WebRTC 1.0 standard compliant browser
   rtc_ice_candidate = RTCIceCandidate;
   get_user_media = navigator.webkitGetUserMedia.bind(navigator);
   connect_stream_to_src = function(media_stream, media_element) {
-    media_element.src = webkitURL.createObjectURL(media_stream);
+    media_element.src = URL.createObjectURL(media_stream);
     media_element.play();
   };
 } else {
