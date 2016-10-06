@@ -32,7 +32,7 @@ var fs = require("fs");
 var websocket = require("websocket").server;
 
 // general variables
-var port = 1234;
+var port = process.env.PORT || 3000;
 var webrtc_clients = [];
 var webrtc_discussions = {};
 
@@ -76,7 +76,7 @@ websocket_server.on("request", function(request) {
 
   webrtc_clients.push(connection);
   connection.id = webrtc_clients.length-1;
-  
+
   connection.on("message", function(message) {
     if (message.type === "utf8") {
       log_comment("got message "+message.utf8Data);
@@ -109,7 +109,7 @@ websocket_server.on("request", function(request) {
       }
     }
   });
-  
+
   connection.on("close", function(reason_code, description) {
     log_comment("connection closed ("+this.remoteAddress+" - "+reason_code+" - "+description+")");
     Object.keys(webrtc_discussions).forEach(function(token) {
