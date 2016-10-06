@@ -116,6 +116,19 @@ function start() {
     ]
   });
 
+  // display remote video streams when they arrive using remote_video <video> MediaElement
+  peer_connection.onaddstream = function (event) {
+    console.log("new remote stream added");
+    connect_stream_to_src(event.stream, document.getElementById("remote_video"));
+    // hide placeholder and show remote video
+    document.getElementById("loading_state").style.display = "none";
+    console.log("updating UI to open_call_state");
+    document.getElementById("open_call_state").style.display = "block";
+  };
+
+  // setup stream from the local camera
+  setup_video();
+  
   // generic handler that sends any ice candidates to the other peer
   peer_connection.onicecandidate = function (ice_event) {
     console.log("new ice candidate");
@@ -130,18 +143,6 @@ function start() {
     }
   };
 
-  // display remote video streams when they arrive using remote_video <video> MediaElement
-  peer_connection.onaddstream = function (event) {
-    console.log("new remote stream added");
-    connect_stream_to_src(event.stream, document.getElementById("remote_video"));
-    // hide placeholder and show remote video
-    document.getElementById("loading_state").style.display = "none";
-    console.log("updating UI to open_call_state");
-    document.getElementById("open_call_state").style.display = "block";
-  };
-
-  // setup stream from the local camera
-  setup_video();
 
   // setup generic connection to the signaling server using the WebSocket API
   console.log("setting up connection to signaling server");
