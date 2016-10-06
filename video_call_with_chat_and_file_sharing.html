@@ -146,7 +146,8 @@ function start() {
 
   // setup generic connection to the signaling server using the WebSocket API
   console.log("setting up connection to signaling server");
-  signaling_server = new WebSocket("ws://localhost:1234");
+  var HOST = location.origin.replace(/^http/, 'ws');
+  signaling_server = new WebSocket(HOST);
 
   if (document.location.hash === "" || document.location.hash === undefined) { // you are the Caller
     console.log("you are the Caller");
