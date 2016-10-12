@@ -2,52 +2,6 @@
 <html>
 <head>
 <script>
-/*
-
-  image_processing_pipeline.js by Rob Manson (buildAR.com)
-
-    This code is designed to help you explore how the Video/Canvas processing
-    pipeline works. 
-
-    The coding style is focused on clearly describing the concepts and is not 
-    designed to be used as production code.
-
-    The key concepts covered are:
-    - the Video/Canvas pipeline
-    - Array Buffers vs Views
-    - efficient frame buffer processing using multiple Views
-
-    HINT:
-    Search for "example:" to find useful examples below.
-
-
-  The MIT License
-
-  Copyright (c) 2013 Rob Manson, http://buildAR.com. All rights reserved.
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
- 
-*/
-
-///////////////////////////////////////////////
-/*          EDIT BELOW TO EXPERIMENT          */
-///////////////////////////////////////////////
 
 // setup variables
 var pipeline_processor_speed = 30; // processor iterations per second
@@ -105,12 +59,12 @@ function example_processor(pipeline_image_data) {
       // add random noise to the alpha channel
       //channels[ a ] = Math.round(Math.random()*255); // example: random alpha noise
 
-      // chroma key 1 - make greener things transparent 
+      // chroma key 1 - make greener things transparent
       //if (channels[ g ] > channels[ r ] && channels[ g ] > channels[ b ]) {
       //  channels[ a ] = 0; // example: make this transparent
       //}
 
-      // chroma key 2 - make darker things transparent 
+      // chroma key 2 - make darker things transparent
       //if (channels[ r ] < 75 && channels[ g ] < 75 && channels[ g ] < 75) {
       //  channels[ a ] = 0; // example: make this transparent
       //}
@@ -121,11 +75,6 @@ function example_processor(pipeline_image_data) {
     pipeline_ctx.putImageData(pipeline_image_data, 0, 0);
   }
 }
-
-
-///////////////////////////////////////////////
-/*        EDITING BELOW IS OPTIONAL          */
-///////////////////////////////////////////////
 
 var pipeline_canvas = undefined;
 var pipeline_ctx = undefined;
@@ -144,21 +93,6 @@ function get_stream(canvas) {
   pipeline_canvas.width = pipeline_width; // set this otherwise it defaults to 300
   pipeline_canvas.height = pipeline_height; // set this otherwise it defaults to 150
   pipeline_ctx = pipeline_canvas.getContext("2d");
-  /*
-  var options = { 
-    video:{
-      mandatory: {
-        width: { min: pipeline_width },
-        height: { min: pipeline_height }
-      },
-    //  optional: [
-    //    { frameRate: 60 },
-    //    { facingMode: "user" }
-    //  ]
-    }, 
-    audio:false 
-  };
-  */
   var options = { video:true, audio:false };
   get_user_media(options, create_vc_pipeline, got_error);
   function got_error(error) {
@@ -185,26 +119,24 @@ function create_vc_pipeline(stream) {
 
 // start the pipeline processor
 function start_pipeline() {
-  // NOTE: You may prefer to use requestAnimationFrame() or setTimeout() here as needed
-  //       setInterval() has been used in this demo for it's simplicity
   pipeline_interval = setInterval(function() {
       pipeline_callback();
-    }, 
+    },
     1000/pipeline_processor_speed
   );
 }
 
-// pipeline processor callback 
+// pipeline processor callback
 function pipeline_callback() {
   if (pipeline_ctx && pipeline_video) {
     pipeline_ctx.drawImage(pipeline_video, 0, 0, pipeline_width, pipeline_height);
-    example_processor(pipeline_ctx.getImageData(0, 0, pipeline_width, pipeline_height)); // process frame 
+    example_processor(pipeline_ctx.getImageData(0, 0, pipeline_width, pipeline_height)); // process frame
     //console.log(pipeline_video.currentTime); // example: how to log video timestamps
     // example: integrate other sensor data with timestamps here
   }
 }
 
-// toggle filter on/off 
+// toggle filter on/off
 function toggle_filter() {
   pipeline_filter_on = !pipeline_filter_on;
 }
@@ -214,15 +146,10 @@ function stop_pipeline() {
   clearInterval(pipeline_interval);
 }
 
-
-///////////////////////////////////////////////
-/*           GENERIC GUM POLY FILL           */
-///////////////////////////////////////////////
-
 // setup get_user_media polyfill
 var get_user_media = null;
 var connect_stream_to_src = null;
-var browser_type = null; 
+var browser_type = null;
 if (navigator.getUserMedia) { // WebRTC 1.0 standard compliant browser
   get_user_media = navigator.getUserMedia.bind(navigator);
   connect_stream_to_src = function(media_stream, media_element) {

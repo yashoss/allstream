@@ -1,43 +1,5 @@
 function sdp_session_manager() {
-  /*
-
-  sdp_session_manager.js by Rob Manson (buildAR.com)
-
-  An SDP parsing and rendering process based on rfc4566 and rfc3264.
-
-  basic usage
-  -----------
-  var sdp_sm = new sdp_session_manager(); 
-  var session = sdp_sm.parse_sdp(sdp_in);
-  var sdp_out = sdp_sm.render_sdp(session);
-
-  NOTE: sdp_out should == sdp_in
-
-
-  The MIT License
-
-  Copyright (c) 2013 Rob Manson, http://buildAR.com. All rights reserved.
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
- 
-  */
-
+  
   var this_session, state, current_media, current_rtpmap;
 
   var sm = new sdp_session_manager();
@@ -74,7 +36,7 @@ function sdp_session_manager() {
     if (i != undefined) {
       if (m[i] != undefined) {
         if (type != undefined) {
-          m[i].mode = type; 
+          m[i].mode = type;
         } else {
           m[i].mode = "sendrecv";
         }
@@ -156,7 +118,7 @@ function sdp_session_manager() {
   function split_attribute_value(value) {
     var match = value.match(/(.*?):(.*)/);
     var key = match[1];
-    var value = match[2]; 
+    var value = match[2];
     return { key:key, value:value };
   }
 
@@ -204,7 +166,7 @@ function sdp_session_manager() {
         this_session.session.other_attributes[obj.key] = obj.value;
       } else {
         console.log("ERROR: invalid session attribute ("+key+":"+value+")");
-      }    
+      }
     }
   }
 
@@ -230,22 +192,22 @@ function sdp_session_manager() {
         };
       } else {
         console.log("ERROR: invalid media line ("+value+")");
-      } 
+      }
     } else if (key == "c") {
       var connection = split_value(value);
       if (connection.length == 3) {
         this_session.media[current_media].connection = {
           net_type: connection[0],
           address_type: connection[1],
-          address: connection[2], 
+          address: connection[2],
         };
       } else {
         console.log("ERROR: invalid media line ("+value+")");
-      } 
+      }
     } else if (key == "a") {
       value = value.replace(/:\s+/, ":");
       if (value.match(/(recvonly|sendrecv|sendonly|inactive)/)) {
-        this_session.media[current_media].mode = value;  
+        this_session.media[current_media].mode = value;
       } else {
         var obj = undefined;
         try {
@@ -271,7 +233,7 @@ function sdp_session_manager() {
             }
           } else if (obj.key == "fmtp") {
             var values = split_value(obj.value);
-            this_session.media[current_media].rtp_formats[current_rtpmap].format_parameters = values.splice(1,values.length).join(" "); 
+            this_session.media[current_media].rtp_formats[current_rtpmap].format_parameters = values.splice(1,values.length).join(" ");
           } else if (obj.key == "candidate") {
             if (this_session.media[current_media].candidates == undefined) {
               this_session.media[current_media].candidates = [];
@@ -294,7 +256,7 @@ function sdp_session_manager() {
             }
           }
         } else if (this_session.media[current_media].other_attributes[value] == undefined) {
-            this_session.media[current_media].other_attributes[value] = ""; 
+            this_session.media[current_media].other_attributes[value] = "";
         } else {
           var tmp = this_session.media[current_media].other_attributes[value];
           if (tmp instanceof Array) {
@@ -303,7 +265,7 @@ function sdp_session_manager() {
             var tmp2 = [tmp];
             tmp = tmp2;
           }
-        }    
+        }
       }
     }
   }
@@ -329,11 +291,11 @@ function sdp_session_manager() {
 
   function render_session(obj) {
     var sdp = "v=0\r\n";
-    if (obj.username != undefined 
-        && obj.id != undefined 
-        && obj.version != undefined 
-        && obj.net_type != undefined 
-        && obj.address_type != undefined 
+    if (obj.username != undefined
+        && obj.id != undefined
+        && obj.version != undefined
+        && obj.net_type != undefined
+        && obj.address_type != undefined
         && obj.address != undefined) {
       var o = [obj.username, obj.id, obj.version, obj.net_type, obj.address_type, obj.address].join(" ");
       sdp += render_line("o", o);
@@ -345,14 +307,14 @@ function sdp_session_manager() {
       sdp += render_line("t", obj.time.start+" "+obj.time.stop);
     }
     if (obj.group_bundle != undefined) {
-      sdp += render_line("a","group:BUNDLE "+obj.group_bundle.join(" ")); 
+      sdp += render_line("a","group:BUNDLE "+obj.group_bundle.join(" "));
     }
     if (Object.keys(obj.other_attributes).length) {
       for (var key in obj.other_attributes) {
         sdp += render_line("a", render_attribute(key, obj.other_attributes[key]));
       }
     }
-    return sdp; 
+    return sdp;
   }
 
   function render_media(obj) {
@@ -376,7 +338,7 @@ function sdp_session_manager() {
           sdp += render_line("c", [c.net_type, c.address_type, c.address].join(" "));
         }
         if (m.mode != undefined) {
-          sdp += render_line("a", render_attribute(m.mode)); 
+          sdp += render_line("a", render_attribute(m.mode));
         }
         if (m.rtp_formats != undefined) {
           for (var fid in m.rtp_formats) {
@@ -401,14 +363,14 @@ function sdp_session_manager() {
         if (m.candidates != undefined) {
           if (Object.keys(m.candidates).length) {
             for (var id in m.candidates) {
-              sdp += render_line("a", "candidate:"+m.candidates[id]); 
+              sdp += render_line("a", "candidate:"+m.candidates[id]);
             }
           }
         }
         if (m.synchronisation_sources != undefined) {
           if (Object.keys(m.synchronisation_sources).length) {
             for (var id in m.synchronisation_sources) {
-              sdp += render_line("a", "ssrc:"+m.synchronisation_sources[id]); 
+              sdp += render_line("a", "ssrc:"+m.synchronisation_sources[id]);
             }
           }
         }

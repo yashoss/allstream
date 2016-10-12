@@ -2,35 +2,6 @@
 <html>
 <head>
 <script>
-/*
-
-  webrtc_polyfill.js by Rob Manson (buildAR.com)
-  NOTE: Based on adapter.js by Adam Barth
-        See http://www.webrtc.org/interop for more info
-
-  The MIT License
-
-  Copyright (c) 2013 Rob Manson, http://buildAR.com. All rights reserved.
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-
-*/
 
 var webrtc_capable = true;
 var rtc_peer_connection = null;
@@ -74,33 +45,6 @@ if (navigator.getUserMedia) { // WebRTC 1.0 standard compliant browser
 }
 </script>
 <script>
-/*
-
-  video_call_with_chat_and_file_sharing.js by Rob Manson (buildAR.com)
-
-  The MIT License
-
-  Copyright (c) 2013 Rob Manson, http://buildAR.com. All rights reserved.
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-
-*/
 
 var call_token; // unique token for this call
 var signaling_server; // signaling server for this call
@@ -116,19 +60,6 @@ function start() {
     ]
   });
 
-  // display remote video streams when they arrive using remote_video <video> MediaElement
-  peer_connection.onaddstream = function (event) {
-    console.log("new remote stream added");
-    connect_stream_to_src(event.stream, document.getElementById("remote_video"));
-    // hide placeholder and show remote video
-    document.getElementById("loading_state").style.display = "none";
-    console.log("updating UI to open_call_state");
-    document.getElementById("open_call_state").style.display = "block";
-  };
-
-  // setup stream from the local camera
-  setup_video();
-  
   // generic handler that sends any ice candidates to the other peer
   peer_connection.onicecandidate = function (ice_event) {
     console.log("new ice candidate");
@@ -143,6 +74,18 @@ function start() {
     }
   };
 
+  // display remote video streams when they arrive using remote_video <video> MediaElement
+  peer_connection.onaddstream = function (event) {
+    console.log("new remote stream added");
+    connect_stream_to_src(event.stream, document.getElementById("remote_video"));
+    // hide placeholder and show remote video
+    document.getElementById("loading_state").style.display = "none";
+    console.log("updating UI to open_call_state");
+    document.getElementById("open_call_state").style.display = "block";
+  };
+
+  // setup stream from the local camera
+  setup_video();
 
   // setup generic connection to the signaling server using the WebSocket API
   console.log("setting up connection to signaling server");
@@ -556,6 +499,9 @@ html, body {
   padding: 0px;
   margin: 0px;
   font-family: "Arial","Helvetica",sans-serif;
+  background-image: url("./images/lights.jpeg");
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 #loading_state {
   position: absolute;
