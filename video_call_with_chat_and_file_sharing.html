@@ -289,7 +289,7 @@ function create_answer() {
 function add_chat_message(signal) {
   var messages = document.getElementById("messages");
   var user = signal.user || "Friend";
-  messages.innerHTML = user+": "+signal.message+"<br/>\n"+messages.innerHTML;
+  messages.innerHTML = messages.innerHTML+"<br/>\n"+user+": "+signal.message;
 }
 
 // send new chat message to the other browser
@@ -523,8 +523,7 @@ html, body {
   background: #333333;
 }
 #remote_video {
-  flex-grow: 1;
-  height: 768px;
+  width: 100%;
   background: #999999;
 }
 #chat {
@@ -543,13 +542,13 @@ html, body {
   overflow-wrap: break-word;
 }
 #message_input {
-  position: absolute;
-  top: 5px;
-  left: 5px;
   height: 20px;
-  width: 280px;
+  display: flex;
+  width: 90%;
   padding-left: 5px;
   background: #FFFFFF;
+  margin: 10px;
+  margin-top: -15px;
 }
 #file_sharing {
   flex-grow: 1;
@@ -563,20 +562,17 @@ html, body {
   display: none;
 }
 #file_add {
-  position: absolute;
   padding: 0px;
   height: 120px;
   width: 160px;
   text-align: center;
   cursor: pointer;
+  margin: 0 auto;
 }
 #file_list {
   overflow: auto;
-  position: absolute;
   padding: 0px;
-  top: 173px;
-  height: 710px;
-  width: 16%;
+  height: 85%;
 }
 .file {
   width: 160px;
