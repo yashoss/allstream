@@ -289,7 +289,7 @@ function create_answer() {
 function add_chat_message(signal) {
   var messages = document.getElementById("messages");
   var user = signal.user || "Friend";
-  messages.innerHTML = messages.innerHTML+"<br/>\n"+user+": "+signal.message;
+  messages.innerHTML = user+": "+signal.message+"<br/>\n"+messages.innerHTML;
 }
 
 // send new chat message to the other browser
@@ -524,22 +524,25 @@ html, body {
 }
 #remote_video {
   width: 100%;
-  background: #999999;
+  background-color: rgba(100, 100, 100, 0.2);
 }
 #chat {
   flex-grow: 1;
   height: 768px;
-  background: #CCCCCC;
+  position: relative;
+  background-color: floralwhite;
+  overflow: hidden;
   opacity: 0.75;
 }
 #messages {
   overflow: auto;
   flex-grow: 1;
   height: 733px;
-  padding-top: 15px;
+  margin-top: 37px;
   padding-left: 5px;
   font-size: 14px;
   overflow-wrap: break-word;
+  overflow-y: scroll;
 }
 #message_input {
   height: 20px;
@@ -548,14 +551,14 @@ html, body {
   padding-left: 5px;
   background: #FFFFFF;
   margin: 10px;
-  margin-top: -15px;
+  position: absolute;
+  top: 0px;
 }
 #file_sharing {
   flex-grow: 1;
   height: 766px;
-  border: 1px solid black;
   border-right: none;
-  background-color: wheat;
+  background-color: floralwhite;
   opacity: 0.75;
 }
 #file_input {
@@ -615,6 +618,7 @@ div#instructions {
   width: 548px;
   margin-top: 123px;
   margin-left: 34%;
+  padding: 5px 5px 0px 5px;
 }
 
 div#video_elements {
@@ -623,8 +627,9 @@ div#video_elements {
 }
 
 #file_add img {
-    width: 50%;
-    height: 80%;
+  width: 85%;
+  margin-top: 5px;
+  height: 80%;
 }
 </style>
 </head>
@@ -635,11 +640,11 @@ div#video_elements {
   </div>
   <div id="instructions">Instructions:
     <p id="steps">
-      1. Allow access to camera and microphone<br />
-      2. Copy your session url and send it to a friend<br />
-      3. Or open it in a new browser window -- CAUTION for audio feedback<br />
+      1. Allow access to camera and microphone<br /><br />
+      2. Copy your session url and send it to a friend<br /><br />
+      3. Or open it in a new browser window -- CAUTION for audio feedback<br /><br />
       4. Browser should load your local stream and your friend's stream and you<br />
-      can enjoy speaking to each other, sending messages, and sharing pictures<br />
+      can enjoy speaking to each other, sending messages, and sharing pictures<br /><br />
       NOTE: Some networks may block streaming services
     </p>
   </div>
