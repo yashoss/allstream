@@ -516,18 +516,12 @@ html, body {
   display: none;
 }
 #local_video {
-  position: absolute;
-  top: 60px;
-  left: 260px;
-  width: 160px;
+  flex-grow: 1;
   height: 120px;
   background: #333333;
 }
 #remote_video {
-  position: absolute;
-  top: 50px;
-  left: 250px;
-  width: 1024px;
+  flex-grow: 1;
   height: 768px;
   background: #999999;
 }
@@ -542,11 +536,8 @@ html, body {
 }
 #messages {
   overflow: auto;
-  position: absolute;
-  top: 20px;
-  left: 0px;
+  flex-grow: 1;
   height: 733px;
-  width: 295px;
   padding-top: 15px;
   padding-left: 5px;
   font-size: 14px;
@@ -562,11 +553,8 @@ html, body {
   background: #FFFFFF;
 }
 #file_sharing {
-  position: absolute;
-  top: 50px;
-  left: 10px;
+  flex-grow: 1;
   height: 766px;
-  width: 239px;
   border: 1px solid black;
   border-right: none;
   background-color: wheat;
@@ -651,12 +639,6 @@ div#instructions {
     </p>
   </div>
   <div id="open_call_state">
-    <video id="remote_video"></video>
-    <video id="local_video"></video>
-    <div id="chat">
-      <div id="messages"></div>
-      <input type="text" id="message_input" value="Type here then hit enter..."></input>
-    </div>
     <div id="file_sharing">
       <input type="file" id="file_input"></input>
       <div id="file_add">
@@ -666,6 +648,12 @@ div#instructions {
       </div>
       <img id="file_img_src" />
       <canvas id="file_thumbnail_canvas"></canvas>
+    </div>
+    <video id="remote_video"></video>
+    <video id="local_video"></video>
+    <div id="chat">
+      <div id="messages"></div>
+      <input type="text" id="message_input" value="Type here then hit enter..."></input>
     </div>
   </div>
 </body>
