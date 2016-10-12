@@ -516,8 +516,10 @@ html, body {
   display: none;
 }
 #local_video {
-  flex-grow: 1;
   height: 120px;
+  position: absolute;
+  margin-left: 10px;
+  margin-top: 10px;
   background: #333333;
 }
 #remote_video {
@@ -535,11 +537,8 @@ html, body {
   opacity: 0.75;
 }
 #messages {
-  overflow: auto;
   flex-grow: 1;
   height: 733px;
-  padding-top: 15px;
-  padding-left: 5px;
   font-size: 14px;
   overflow-wrap: break-word;
 }
@@ -575,9 +574,9 @@ html, body {
   overflow: auto;
   position: absolute;
   padding: 0px;
-  top: 130px;
-  height: 636px;
-  width: 238px;
+  top: 173px;
+  height: 710px;
+  width: 16%;
 }
 .file {
   width: 160px;
@@ -611,7 +610,7 @@ html, body {
 }
 
 h1#logo {
-  margin-top: 0;
+  margin-top: 10px;
   margin-left: 45%;
 }
 
@@ -620,6 +619,16 @@ div#instructions {
   width: 548px;
   margin-top: 123px;
   margin-left: 34%;
+}
+
+div#video_elements {
+    flex-grow: 1;
+    display: flex;
+}
+
+#file_add img {
+    width: 50%;
+    height: 80%;
 }
 </style>
 </head>
