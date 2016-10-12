@@ -152,6 +152,7 @@ function start() {
     document.title = "You are the Callee";
     console.log("updating UI to loading_state");
     document.getElementById("loading_state").innerHTML = "One moment please...connecting your call...";
+    document.getElementById("instructions").style.display = "none";
   }
 
   // setup message bar handlers
@@ -502,6 +503,7 @@ html, body {
   background-image: url("./images/lights.jpeg");
   background-repeat: no-repeat;
   background-position: center center;
+  background-size: cover;
 }
 #loading_state {
   position: absolute;
@@ -616,6 +618,11 @@ html, body {
   display: none;
   width: 160px;
   height: 120px;
+}
+
+h1#logo {
+    position: absolute;
+    left: 700px;
 }
 </style>
 </head>
