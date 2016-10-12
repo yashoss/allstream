@@ -287,7 +287,7 @@ function create_answer() {
 // add new chat message to messages list
 function add_chat_message(signal) {
   var messages = document.getElementById("messages");
-  var user = signal.user || "them";
+  var user = signal.user || "Friend";
   messages.innerHTML = user+": "+signal.message+"<br/>\n"+messages.innerHTML;
 }
 
@@ -303,7 +303,7 @@ function send_chat_message(e) {
         message: new_message
       })
     );
-    add_chat_message({ user: "you", message: new_message });
+    add_chat_message({ user: "You", message: new_message });
   }
 }
 
@@ -620,8 +620,19 @@ html, body {
 </style>
 </head>
 <body onload="start()">
+  <h1 id="logo">All Stream</h1>
   <div id="loading_state">
     loading...
+    <div id="instructions">Instructions:
+      <p id="steps">
+        1. Allow access to camera and microphone
+        2. Copy your session url and send it to a friend
+        3. Or open it in a new browser window -- CAUTION for audio feedback
+        4. Browser should load your local stream and your friend's stream and you
+            can enjoy speaking to each other, sending messages, and sharing pictures
+        NOTE: Some networks may block streaming services
+      </p>
+    </div>
   </div>
   <div id="open_call_state">
     <video id="remote_video"></video>
