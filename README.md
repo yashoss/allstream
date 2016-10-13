@@ -1,4 +1,4 @@
-# Smack Chat
+# All Stream
 
 ## Easy to use video and audio chat application with text chat and picture sharing.
 
